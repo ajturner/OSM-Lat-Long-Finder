@@ -28,6 +28,7 @@
     </style>
     <script src="http://openlayers.org/api/OpenLayers.js"></script>
     <script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+    <script src="http://www.fidnet.com/~jlmoore/usng/usng.js"></script>
 
     <script type="text/javascript">
         var dms = false;
@@ -76,6 +77,7 @@
                 var mc = map.getLonLatFromViewPortPx(new 
                 OpenLayers.Pixel(evt.xy.x , evt.xy.y) );
                 OpenLayers.Util.getElement("coords").innerHTML = getFormattedCoord(mc);
+                OpenLayers.Util.getElement("mgrs").innerHTML = getMGRS(mc);
                 addMarker(mc);
 
           	} 
@@ -96,6 +98,13 @@
                 }
 
                 return "Latitude : " + lat + "<br/>" + "Longitude : " + lon;
+            }
+
+            function getMGRS(latlng){
+            	//latlng= latlng.transform(map.projection, map.displayProjection);
+                var lat = latlng.lat;
+                var lon = latlng.lon;
+                return "MGRS: " + LLtoMGRS(lat,lon,5);         	
             }
             
             function getDMS(dd){
